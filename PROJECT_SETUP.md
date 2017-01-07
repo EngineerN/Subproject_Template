@@ -1,5 +1,5 @@
 # Project Setup
-This file is a detailed description of the necessary changes to use this template.
+This file is a detailed description of the necessary changes to use this template. For updates on this subproject template, add a pull url to get updates on the "template" branch.
 
 ## Project Structure
 Assuming Subproject is named Test.
