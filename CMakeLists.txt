@@ -10,9 +10,11 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 # Option to make CMake output Verbose
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-
-include 
-
+# Export no symbols by default (if the compiler supports it).
+# This makes e.g. GCC's "visibility behavior" consistent with MSVC's. 
+# On Windows/MSVC this is a noop.
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 # Get the lowercase version of the project name.
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
@@ -24,39 +26,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME_LOWER})
 file(GLOB SOURCES "src/*.cpp")
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Set CXX_FLAGS
-set(CXX_FLAGS -Wall -pedantic -Wextra -std=c++11)
-set(CXX_FLAGS_RELWITHDEBINFO -O2 -g)
-set(CXX_FLAGS_RELEASE -O2)
-set(CXX_FLAGS_DEBUG -O0 -g)
+# Set Extra CXX_FLAGS
+set(CXX_WARNING_FLAGS -W -Wall -Wextra -pedantic /W4)
 
-# Check and add flags
-
-foreach(CXX_FLAGS_ITEM ${CXX_FLAGS})
-  CHECK_CXX_COMPILER_FLAG(CXX_FLAGS_ITEM ${CMAKE_CXX_FLAGS})
-endforeach()
-
-# Set CXX_FLAGS_RELWITHDEBINFO
-
-
-foreach(CXX_FLAGS_RELWITHDEBINFO_ITEM ${CXX_FLAGS})
-  CHECK_CXX_COMPILER_FLAG(CXX_FLAGS_RELWITHDEBINFO_ITEM ${CMAKE_CXX_FLAGS_RELWITHDEBINFO})
-endforeach()
-
-# Set CXX_FLAGS_RELEASE
-set(CXX_FLAGS_RELEASE -O2)
-
-foreach(CXX_FLAGS_RELEASE_ITEM ${CXX_FLAGS_RELEASE})
-  CHECK_CXX_COMPILER_FLAG(CXX_FLAGS_RELEASE_ITEM ${CMAKE_CXX_FLAGS_RELEASE})
-endforeach()
-
-# Set CXX_FLAGS_DEBUG
-set(CXX_FLAGS_DEBUG -O0 -g)
-
-foreach(CXX_FLAGS_DEBUG_ITEM ${CXX_FLAGS_DEBUG})
-  CHECK_CXX_COMPILER_FLAG(CXX_FLAGS_ITEM ${CMAKE_CXX_FLAGS_DEBUG})
-endforeach()
+#Check and add flags
+add_compile_options(${CXX_WARNING_FLAGS})
 
 # Generate the shared library from the sources
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
