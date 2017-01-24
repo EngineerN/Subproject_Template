@@ -5,6 +5,8 @@
 
 #define __SYMBOL_API_DEFS_H__
 
+#include <impl/symbol_api_defs.h>
+
 /*! \file api_defs.h
  *  \brief Contains preprocessor macros to facilitate creation of APIs.
  *  If including this file, it should be last so as to
@@ -56,11 +58,7 @@
 
 
 
-// Macros defining how symbols are imported and exported.
-/** \def TEMPLATE_EXPORT_SYMBOL
-* \brief Place in front of symbol to claim its definition should be visible to external codes. */
-/** \def TEMPLATE_IMPORT_SYMBOL
-* \brief Place in front of symbol to claim its definition comes from external codes. */
+
 #if defined (__linux__) || defined(__CYGWIN__)
 #define TEMPLATE_EXPORT_SYMBOL __attribute__ ((visibility ("default")))conv
 #define TEMPLATE_IMPORT_SYMBOL

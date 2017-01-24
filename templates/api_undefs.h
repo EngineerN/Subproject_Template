@@ -58,3 +58,5 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <impl/symbol_api_undefs.h>
