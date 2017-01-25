@@ -1,5 +1,5 @@
 # Minimum CMake required
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 # Define the project.
 project(Test VERSION 0.0.0 LANGUAGES C CXX)
@@ -25,18 +25,20 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME_LOWER})
 # Glob .cpp files for compilation.
 file(GLOB SOURCES "src/*.cpp")
 
+# Set Cxx Standard for use.
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set visibility flags
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 #Check and add warning flags
 add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/Wall>
                     $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra -pedantic>
                     $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -pedantic>)
 
-#Check and add visibility flags
-add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MT /MTd>
-                    $<$<CXX_COMPILER_ID:Clang>:-fvisibility=hidden>
-                    $<$<CXX_COMPILER_ID:GNU>:-fvisibility=hidden>)
-
 # Generate the shared library from the sources
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
+include(GenerateExportHeader)
+GENERATE_EXPORT_HEADER(Test)
