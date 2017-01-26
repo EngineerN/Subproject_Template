@@ -6,6 +6,11 @@ project(Test VERSION 0.0.0 LANGUAGES C CXX)
 
 # Add CMake Modules
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
+INCLUDE(SafeGuards)
+INCLUDE(InstallDirs)
+
+# Options for the CMakeLists.txt
+option(BUILD_DOCS "Enables building doxygen docs" ON)
 
 # Option to make CMake output Verbose
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -33,10 +38,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
+# Recurse into sub directories
+IF(${BUILD_DOCS})
+    ADD_SUBDIRECTORY(doc)
+ENDIF()
+
 #Check and add warning flags
-add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/Wall>
-                    $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra -pedantic>
-                    $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -pedantic>)
+set(MSVC_WARNING_FLAGS /Wall)
+set(CLANG_WARNING_FLAGS -Wall -Wextra -pedantic)
+set(GNU_WARNING_FLAGS -Wall -Wextra -pedantic)
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:${MSVC_WARNING_FLAGS}>")
+add_compile_options("$<$<CXX_COMPILER_ID:Clang>:${CLANG_WARNING_FLAGS}>")
+add_compile_options("$<$<CXX_COMPILER_ID:GNU>:${GNU_WARNING_FLAGS}>")
 
 # Generate the shared library from the sources
 add_library(${PROJECT_NAME} SHARED ${SOURCES})

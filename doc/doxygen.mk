@@ -1,4 +1,4 @@
-# Doxyfile 1.8.7
+# Doxyfile 1.8.8
 
 # This file describes the settings to be used by the documentation system
 # doxygen (www.doxygen.org) for a project.
@@ -32,33 +32,33 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = @CMAKE_PROJECT_NAME@
+PROJECT_NAME           = ""
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = 
+PROJECT_NUMBER         = ""
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = 
+PROJECT_BRIEF          = ""
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is included in
 # the documentation. The maximum height of the logo should not exceed 55 pixels
 # and the maximum width should not exceed 200 pixels. Doxygen will copy the logo
 # to the output directory.
 
-PROJECT_LOGO           = 
+PROJECT_LOGO           = ${ASSETS_DIR}/arrayfire_logo.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = @CMAKE_BINARY_DIR@/doc
+OUTPUT_DIRECTORY       = ${CMAKE_CURRENT_BINARY_DIR}
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 4096 sub-
 # directories (in 2 levels) under the output directory of each output format and
@@ -118,17 +118,7 @@ REPEAT_BRIEF           = YES
 # the entity):The $name class, The $name widget, The $name file, is, provides,
 # specifies, contains, represents, a, an and the.
 
-ABBREVIATE_BRIEF       = "The $name class" \
-                         "The $name widget" \
-                         "The $name file" \
-                         is \
-                         provides \
-                         specifies \
-                         contains \
-                         represents \
-                         a \
-                         an \
-                         the
+ABBREVIATE_BRIEF       =
 
 # If the ALWAYS_DETAILED_SEC and REPEAT_BRIEF tags are both set to YES then
 # doxygen will generate a detailed section even if there is only a brief
@@ -162,7 +152,8 @@ FULL_PATH_NAMES        = YES
 # will be relative from the directory where doxygen is started.
 # This tag requires that the tag FULL_PATH_NAMES is set to YES.
 
-STRIP_FROM_PATH        = 
+STRIP_FROM_PATH        = ${INCLUDE_DIR} \
+                         ${INCLUDE_DIR}/af
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of the
 # path mentioned in the documentation of a class, which tells the reader which
@@ -171,7 +162,7 @@ STRIP_FROM_PATH        =
 # specify the list of include paths that are normally passed to the compiler
 # using the -I flag.
 
-STRIP_FROM_INC_PATH    = 
+STRIP_FROM_INC_PATH    =
 
 # If the SHORT_NAMES tag is set to YES, doxygen will generate much shorter (but
 # less readable) file names. This can be useful is your file systems doesn't
@@ -187,7 +178,7 @@ SHORT_NAMES            = NO
 # description.)
 # The default value is: NO.
 
-JAVADOC_AUTOBRIEF      = NO
+JAVADOC_AUTOBRIEF      = YES
 
 # If the QT_AUTOBRIEF tag is set to YES then doxygen will interpret the first
 # line (until the first dot) of a Qt-style comment as the brief description. If
@@ -226,7 +217,7 @@ SEPARATE_MEMBER_PAGES  = NO
 # uses this value to replace tabs by spaces in code fragments.
 # Minimum value: 1, maximum value: 16, default value: 4.
 
-TAB_SIZE               = 4
+TAB_SIZE               = 8
 
 # This tag can be used to specify a number of aliases that act as commands in
 # the documentation. An alias has the form:
@@ -238,13 +229,28 @@ TAB_SIZE               = 4
 # "Side Effects:". You can put \n's in the value part of an alias to insert
 # newlines.
 
-ALIASES                = 
+ALIASES                = "support{1}=<DIV class=\"support\">\1</DIV>" \
+                         "opencl=<IMG src=\"OpenCL.png\" alt=\"OpenCL Support\" />" \
+                         "opencl{1}=<IMG src=\"OpenCL.png\" alt=\"\1\" />" \
+                         "cuda=<IMG src=\"CUDA.png\" alt=\"CUDA Support\" />" \
+                         "sparse=<IMG src=\"sparse.png\" alt=\"Sparse Support\" />" \
+                         "gfor=<IMG src=\"gfor.png\" alt=\"GFOR Support\" />" \
+                         "complex=<IMG src=\"complex.png\" alt=\"Complex Support\" />" \
+                         "jit=<IMG src=\"jit.png\" alt=\"JIT Support\" />" \
+                         "democode{1}=\htmlonly \n <pre class=\"cpp afw\"> <code class=\"cpp\"> \1 </code> </pre> \n \endhtmlonly" \
+                         "imagegroup{1}=<DIV CLASS=\"image_group\"> \1 </DIV>" \
+                         "smallimage{2}=\htmlonly <div class=\"scaled\"><img src=\"\1\" alt=\"\2\"><div class=\"caption\">\2</div></div> \endhtmlonly" \
+                         "funcgroups{3}=\ingroup \3 \n @{ \n \defgroup \1 \2 \n @{ \n" \
+                         "funcgroups{4}=\ingroup \3 \4 \n @{ \n \defgroup \1 \2 \n @{ \n" \
+                         "funcgroups{5}=\ingroup \3 \4 \5 \n @{ \n \defgroup \1 \2 \n @{ \n" \
+                         "funcgroups{6}=\ingroup \3 \4 \5 \6 \n @{ \n \defgroup \1 \2 \n @{ \n" \
+                         "endfuncgroups=@} \n @}"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
 # will allow you to use the command class in the itcl::class meaning.
 
-TCL_SUBST              = 
+TCL_SUBST              =
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C sources
 # only. Doxygen will then generate output that is more tailored for C. For
@@ -252,7 +258,7 @@ TCL_SUBST              =
 # members will be omitted, etc.
 # The default value is: NO.
 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java or
 # Python sources only. Doxygen will then generate output that is more tailored
@@ -291,7 +297,7 @@ OPTIMIZE_OUTPUT_VHDL   = NO
 # Note that for custom extensions you also need to set FILE_PATTERNS otherwise
 # the files are not read by doxygen.
 
-EXTENSION_MAPPING      = 
+EXTENSION_MAPPING      =
 
 # If the MARKDOWN_SUPPORT tag is enabled then doxygen pre-processes all comments
 # according to the Markdown format, which allows for more readable
@@ -437,7 +443,7 @@ EXTRACT_PACKAGE        = NO
 # included in the documentation.
 # The default value is: NO.
 
-EXTRACT_STATIC         = NO
+EXTRACT_STATIC         = YES
 
 # If the EXTRACT_LOCAL_CLASSES tag is set to YES classes (and structs) defined
 # locally in source files will be included in the documentation. If set to NO
@@ -508,14 +514,14 @@ INTERNAL_DOCS          = NO
 # and Mac users are advised to set this option to NO.
 # The default value is: system dependent.
 
-CASE_SENSE_NAMES       = NO
+CASE_SENSE_NAMES       = YES
 
 # If the HIDE_SCOPE_NAMES tag is set to NO then doxygen will show members with
 # their full class and namespace scopes in the documentation. If set to YES the
 # scope will be hidden.
 # The default value is: NO.
 
-HIDE_SCOPE_NAMES       = NO
+HIDE_SCOPE_NAMES       = YES
 
 # If the SHOW_INCLUDE_FILES tag is set to YES then doxygen will put a list of
 # the files that are included by a file in the documentation of that file.
@@ -574,7 +580,7 @@ SORT_MEMBERS_CTORS_1ST = NO
 # appear in their defined order.
 # The default value is: NO.
 
-SORT_GROUP_NAMES       = NO
+SORT_GROUP_NAMES       = YES
 
 # If the SORT_BY_SCOPE_NAME tag is set to YES, the class list will be sorted by
 # fully-qualified names, including namespaces. If set to NO, the class list will
@@ -601,20 +607,20 @@ STRICT_PROTO_MATCHING  = NO
 # documentation.
 # The default value is: YES.
 
-GENERATE_TODOLIST      = YES
+GENERATE_TODOLIST      = NO
 
 # The GENERATE_TESTLIST tag can be used to enable ( YES) or disable ( NO) the
 # test list. This list is created by putting \test commands in the
 # documentation.
 # The default value is: YES.
 
-GENERATE_TESTLIST      = YES
+GENERATE_TESTLIST      = NO
 
 # The GENERATE_BUGLIST tag can be used to enable ( YES) or disable ( NO) the bug
 # list. This list is created by putting \bug commands in the documentation.
 # The default value is: YES.
 
-GENERATE_BUGLIST       = YES
+GENERATE_BUGLIST       = NO
 
 # The GENERATE_DEPRECATEDLIST tag can be used to enable ( YES) or disable ( NO)
 # the deprecated list. This list is created by putting \deprecated commands in
@@ -627,7 +633,7 @@ GENERATE_DEPRECATEDLIST= YES
 # sections, marked by \if <section_label> ... \endif and \cond <section_label>
 # ... \endcond blocks.
 
-ENABLED_SECTIONS       = 
+ENABLED_SECTIONS       =
 
 # The MAX_INITIALIZER_LINES tag determines the maximum number of lines that the
 # initial value of a variable or macro / define can have for it to appear in the
@@ -669,7 +675,7 @@ SHOW_NAMESPACES        = YES
 # by doxygen. Whatever the program writes to standard output is used as the file
 # version. For an example see the documentation.
 
-FILE_VERSION_FILTER    = 
+FILE_VERSION_FILTER    = "/bin/sh -c 'git log --pretty=\"format:%ci, (build %h)\" -1' \"${1}\""
 
 # The LAYOUT_FILE tag can be used to specify a layout file which will be parsed
 # by doxygen. The layout file controls the global structure of the generated
@@ -682,7 +688,7 @@ FILE_VERSION_FILTER    =
 # DoxygenLayout.xml, doxygen will parse it automatically even if the LAYOUT_FILE
 # tag is left empty.
 
-LAYOUT_FILE            = 
+LAYOUT_FILE            = ${DOCS_DIR}/layout.xml
 
 # The CITE_BIB_FILES tag can be used to specify one or more bib files containing
 # the reference definitions. This must be a list of .bib files. The .bib
@@ -690,10 +696,9 @@ LAYOUT_FILE            =
 # to be installed. See also http://en.wikipedia.org/wiki/BibTeX for more info.
 # For LaTeX the style of the bibliography can be controlled using
 # LATEX_BIB_STYLE. To use this feature you need bibtex and perl available in the
-# search path. Do not use file names with spaces, bibtex cannot handle them. See
-# also \cite for info how to create references.
+# search path. See also \cite for info how to create references.
 
-CITE_BIB_FILES         = 
+CITE_BIB_FILES         =
 
 #---------------------------------------------------------------------------
 # Configuration options related to warning and progress messages
@@ -704,7 +709,7 @@ CITE_BIB_FILES         =
 # messages are off.
 # The default value is: NO.
 
-QUIET                  = NO
+QUIET                  = YES
 
 # The WARNINGS tag can be used to turn on/off the warning messages that are
 # generated to standard error ( stderr) by doxygen. If WARNINGS is set to YES
@@ -752,7 +757,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # messages should be written. If left blank the output is written to standard
 # error (stderr).
 
-WARN_LOGFILE           = 
+WARN_LOGFILE           =
 
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
@@ -764,7 +769,10 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = @CMAKE_SOURCE_DIR@
+INPUT                  = ${DOCS_DIR}/pages \
+						 ${INCLUDE_DIR}/ \
+                         ${INCLUDE_DIR}/af/ \
+						 ${DOCS_DIR}/details
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -784,54 +792,13 @@ INPUT_ENCODING         = UTF-8
 # *.md, *.mm, *.dox, *.py, *.f90, *.f, *.for, *.tcl, *.vhd, *.vhdl, *.ucf,
 # *.qsf, *.as and *.js.
 
-FILE_PATTERNS          = *.c \
-                         *.cc \
-                         *.cxx \
-                         *.cpp \
-                         *.c++ \
-                         *.java \
-                         *.ii \
-                         *.ixx \
-                         *.ipp \
-                         *.i++ \
-                         *.inl \
-                         *.idl \
-                         *.ddl \
-                         *.odl \
-                         *.h \
-                         *.hh \
-                         *.hxx \
-                         *.hpp \
-                         *.h++ \
-                         *.cs \
-                         *.d \
-                         *.php \
-                         *.php4 \
-                         *.php5 \
-                         *.phtml \
-                         *.inc \
-                         *.m \
-                         *.markdown \
-                         *.md \
-                         *.mm \
-                         *.dox \
-                         *.py \
-                         *.f90 \
-                         *.f \
-                         *.for \
-                         *.tcl \
-                         *.vhd \
-                         *.vhdl \
-                         *.ucf \
-                         *.qsf \
-                         *.as \
-                         *.js
+FILE_PATTERNS          =
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
 # The default value is: NO.
 
-RECURSIVE              = YES
+RECURSIVE              = NO
 
 # The EXCLUDE tag can be used to specify files and/or directories that should be
 # excluded from the INPUT source files. This way you can easily exclude a
@@ -840,7 +807,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = 
+EXCLUDE                =
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -856,7 +823,7 @@ EXCLUDE_SYMLINKS       = NO
 # Note that the wildcards are matched against the file with absolute path, so to
 # exclude all test directories for example use the pattern */test/*
 
-EXCLUDE_PATTERNS       = 
+EXCLUDE_PATTERNS       = *.cpp
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
@@ -867,33 +834,35 @@ EXCLUDE_PATTERNS       =
 # Note that the wildcards are matched against the file with absolute path, so to
 # exclude all test directories use the pattern */test/*
 
-EXCLUDE_SYMBOLS        = 
+EXCLUDE_SYMBOLS        = APPROX
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or directories
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = 
+EXAMPLE_PATH           = ${EXAMPLES_DIR}/ \
+			${SNIPPETS_DIR}
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and
 # *.h) to filter out the source-files in the directories. If left blank all
 # files are included.
 
-EXAMPLE_PATTERNS       = *
+EXAMPLE_PATTERNS       = *.cpp \
+                         *.cu
 
 # If the EXAMPLE_RECURSIVE tag is set to YES then subdirectories will be
 # searched for input files to be used with the \include or \dontinclude commands
 # irrespective of the value of the RECURSIVE tag.
 # The default value is: NO.
 
-EXAMPLE_RECURSIVE      = NO
+EXAMPLE_RECURSIVE      = YES
 
 # The IMAGE_PATH tag can be used to specify one or more files or directories
 # that contain images that are to be included in the documentation (see the
 # \image command).
 
-IMAGE_PATH             = 
+IMAGE_PATH             = ${ASSETS_DIR}
 
 # The INPUT_FILTER tag can be used to specify a program that doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program
@@ -910,7 +879,7 @@ IMAGE_PATH             =
 # code is scanned, but not when the output code is generated. If lines are added
 # or removed, the anchors will not be placed correctly.
 
-INPUT_FILTER           = 
+INPUT_FILTER           =
 
 # The FILTER_PATTERNS tag can be used to specify filters on a per file pattern
 # basis. Doxygen will compare the file name with each pattern and apply the
@@ -919,7 +888,7 @@ INPUT_FILTER           =
 # filters are used. If the FILTER_PATTERNS tag is empty or if none of the
 # patterns match the file name, INPUT_FILTER is applied.
 
-FILTER_PATTERNS        = 
+FILTER_PATTERNS        =
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
 # INPUT_FILTER ) will also be used to filter the input files that are used for
@@ -934,14 +903,14 @@ FILTER_SOURCE_FILES    = NO
 # *.ext= (so without naming a filter).
 # This tag requires that the tag FILTER_SOURCE_FILES is set to YES.
 
-FILTER_SOURCE_PATTERNS = 
+FILTER_SOURCE_PATTERNS =
 
 # If the USE_MDFILE_AS_MAINPAGE tag refers to the name of a markdown file that
 # is part of the input, its contents will be placed on the main page
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want to reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE = 
+USE_MDFILE_AS_MAINPAGE = ${DOCS_DIR}/pages/README.md
 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
@@ -1053,7 +1022,7 @@ COLS_IN_ALPHA_INDEX    = 5
 # while generating the index headers.
 # This tag requires that the tag ALPHABETICAL_INDEX is set to YES.
 
-IGNORE_PREFIX          = 
+IGNORE_PREFIX          =
 
 #---------------------------------------------------------------------------
 # Configuration options related to the HTML output
@@ -1077,7 +1046,7 @@ HTML_OUTPUT            = html
 # The default value is: .html.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_FILE_EXTENSION    = .html
+HTML_FILE_EXTENSION    = .htm
 
 # The HTML_HEADER tag can be used to specify a user-defined HTML header file for
 # each generated HTML page. If the tag is left blank doxygen will generate a
@@ -1097,7 +1066,7 @@ HTML_FILE_EXTENSION    = .html
 # of the possible markers and block names see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_HEADER            = 
+HTML_HEADER            = ${DOCS_DIR}/header.htm
 
 # The HTML_FOOTER tag can be used to specify a user-defined HTML footer for each
 # generated HTML page. If the tag is left blank doxygen will generate a standard
@@ -1107,7 +1076,7 @@ HTML_HEADER            =
 # that doxygen normally uses.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_FOOTER            = 
+HTML_FOOTER            = ${DOCS_DIR}/footer.htm
 
 # The HTML_STYLESHEET tag can be used to specify a user-defined cascading style
 # sheet that is used by each HTML page. It can be used to fine-tune the look of
@@ -1119,18 +1088,20 @@ HTML_FOOTER            =
 # obsolete.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_STYLESHEET        = 
+HTML_STYLESHEET        =
 
-# The HTML_EXTRA_STYLESHEET tag can be used to specify an additional user-
-# defined cascading style sheet that is included after the standard style sheets
+# The HTML_EXTRA_STYLESHEET tag can be used to specify additional user-defined
+# cascading style sheets that are included after the standard style sheets
 # created by doxygen. Using this option one can overrule certain style aspects.
 # This is preferred over using HTML_STYLESHEET since it does not replace the
 # standard style sheet and is therefor more robust against future updates.
-# Doxygen will copy the style sheet file to the output directory. For an example
-# see the documentation.
+# Doxygen will copy the style sheet files to the output directory.
+# Note: The order of the extra stylesheet files is of importance (e.g. the last
+# stylesheet in the list overrules the setting of the previous ones in the
+# list). For an example see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  = 
+HTML_EXTRA_STYLESHEET  = ${DOCS_DIR}/arrayfire.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
@@ -1140,7 +1111,7 @@ HTML_EXTRA_STYLESHEET  =
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       = 
+HTML_EXTRA_FILES       =
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the stylesheet and background images according to
@@ -1151,7 +1122,7 @@ HTML_EXTRA_FILES       =
 # Minimum value: 0, maximum value: 359, default value: 220.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_COLORSTYLE_HUE    = 220
+HTML_COLORSTYLE_HUE    = 19
 
 # The HTML_COLORSTYLE_SAT tag controls the purity (or saturation) of the colors
 # in the HTML output. For a value of 0 the output will use grayscales only. A
@@ -1159,7 +1130,7 @@ HTML_COLORSTYLE_HUE    = 220
 # Minimum value: 0, maximum value: 255, default value: 100.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_SAT    = 219
 
 # The HTML_COLORSTYLE_GAMMA tag controls the gamma correction applied to the
 # luminance component of the colors in the HTML output. Values below 100
@@ -1170,7 +1141,7 @@ HTML_COLORSTYLE_SAT    = 100
 # Minimum value: 40, maximum value: 240, default value: 80.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_COLORSTYLE_GAMMA  = 80
+HTML_COLORSTYLE_GAMMA  = 70
 
 # If the HTML_TIMESTAMP tag is set to YES then the footer of each generated HTML
 # page will contain the date and time when the page was generated. Setting this
@@ -1186,7 +1157,7 @@ HTML_TIMESTAMP         = YES
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_DYNAMIC_SECTIONS  = NO
+HTML_DYNAMIC_SECTIONS  = YES
 
 # With HTML_INDEX_NUM_ENTRIES one can control the preferred number of entries
 # shown in the various tree structured indices initially; the user can expand
@@ -1268,7 +1239,7 @@ GENERATE_HTMLHELP      = NO
 # written to the html output directory.
 # This tag requires that the tag GENERATE_HTMLHELP is set to YES.
 
-CHM_FILE               = 
+CHM_FILE               =
 
 # The HHC_LOCATION tag can be used to specify the location (absolute path
 # including file name) of the HTML help compiler ( hhc.exe). If non-empty
@@ -1276,7 +1247,7 @@ CHM_FILE               =
 # The file has to be specified with full path.
 # This tag requires that the tag GENERATE_HTMLHELP is set to YES.
 
-HHC_LOCATION           = 
+HHC_LOCATION           =
 
 # The GENERATE_CHI flag controls if a separate .chi index file is generated (
 # YES) or that it should be included in the master .chm file ( NO).
@@ -1289,7 +1260,7 @@ GENERATE_CHI           = NO
 # and project file content.
 # This tag requires that the tag GENERATE_HTMLHELP is set to YES.
 
-CHM_INDEX_ENCODING     = 
+CHM_INDEX_ENCODING     =
 
 # The BINARY_TOC flag controls whether a binary table of contents is generated (
 # YES) or a normal table of contents ( NO) in the .chm file. Furthermore it
@@ -1320,7 +1291,7 @@ GENERATE_QHP           = NO
 # the HTML output folder.
 # This tag requires that the tag GENERATE_QHP is set to YES.
 
-QCH_FILE               = 
+QCH_FILE               =
 
 # The QHP_NAMESPACE tag specifies the namespace to use when generating Qt Help
 # Project output. For more information please see Qt Help Project / Namespace
@@ -1345,7 +1316,7 @@ QHP_VIRTUAL_FOLDER     = doc
 # filters).
 # This tag requires that the tag GENERATE_QHP is set to YES.
 
-QHP_CUST_FILTER_NAME   = 
+QHP_CUST_FILTER_NAME   =
 
 # The QHP_CUST_FILTER_ATTRS tag specifies the list of the attributes of the
 # custom filter to add. For more information please see Qt Help Project / Custom
@@ -1353,21 +1324,21 @@ QHP_CUST_FILTER_NAME   =
 # filters).
 # This tag requires that the tag GENERATE_QHP is set to YES.
 
-QHP_CUST_FILTER_ATTRS  = 
+QHP_CUST_FILTER_ATTRS  =
 
 # The QHP_SECT_FILTER_ATTRS tag specifies the list of the attributes this
 # project's filter section matches. Qt Help Project / Filter Attributes (see:
 # http://qt-project.org/doc/qt-4.8/qthelpproject.html#filter-attributes).
 # This tag requires that the tag GENERATE_QHP is set to YES.
 
-QHP_SECT_FILTER_ATTRS  = 
+QHP_SECT_FILTER_ATTRS  =
 
 # The QHG_LOCATION tag can be used to specify the location of Qt's
 # qhelpgenerator. If non-empty doxygen will try to run qhelpgenerator on the
 # generated .qhp file.
 # This tag requires that the tag GENERATE_QHP is set to YES.
 
-QHG_LOCATION           = 
+QHG_LOCATION           =
 
 # If the GENERATE_ECLIPSEHELP tag is set to YES, additional index files will be
 # generated, together with the HTML files, they form an Eclipse help plugin. To
@@ -1415,7 +1386,7 @@ DISABLE_INDEX          = NO
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 
 # The ENUM_VALUES_PER_LINE tag can be used to set the number of enum values that
 # doxygen will group on one line in the generated HTML documentation.
@@ -1448,7 +1419,7 @@ EXT_LINKS_IN_WINDOW    = NO
 # Minimum value: 8, maximum value: 50, default value: 10.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-FORMULA_FONTSIZE       = 10
+FORMULA_FONTSIZE       = 12
 
 # Use the FORMULA_TRANPARENT tag to determine whether or not the images
 # generated for formulas are transparent PNGs. Transparent PNGs are not
@@ -1470,7 +1441,7 @@ FORMULA_TRANSPARENT    = YES
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-USE_MATHJAX            = NO
+USE_MATHJAX            = YES
 
 # When MathJax is enabled you can set the default output format to be used for
 # the MathJax output. See the MathJax site (see:
@@ -1500,7 +1471,7 @@ MATHJAX_RELPATH        = http://cdn.mathjax.org/mathjax/latest
 # MATHJAX_EXTENSIONS = TeX/AMSmath TeX/AMSsymbols
 # This tag requires that the tag USE_MATHJAX is set to YES.
 
-MATHJAX_EXTENSIONS     = 
+MATHJAX_EXTENSIONS     =
 
 # The MATHJAX_CODEFILE tag can be used to specify a file with javascript pieces
 # of code that will be used on startup of the MathJax code. See the MathJax site
@@ -1508,7 +1479,7 @@ MATHJAX_EXTENSIONS     =
 # example see the documentation.
 # This tag requires that the tag USE_MATHJAX is set to YES.
 
-MATHJAX_CODEFILE       = 
+MATHJAX_CODEFILE       =
 
 # When the SEARCHENGINE tag is enabled doxygen will generate a search box for
 # the HTML output. The underlying search engine uses javascript and DHTML and
@@ -1529,7 +1500,7 @@ MATHJAX_CODEFILE       =
 # The default value is: YES.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-SEARCHENGINE           = YES
+SEARCHENGINE           = NO
 
 # When the SERVER_BASED_SEARCH tag is enabled the search engine will be
 # implemented using a web server instead of a web client using Javascript. There
@@ -1568,7 +1539,7 @@ EXTERNAL_SEARCH        = NO
 # Searching" for details.
 # This tag requires that the tag SEARCHENGINE is set to YES.
 
-SEARCHENGINE_URL       = 
+SEARCHENGINE_URL       =
 
 # When SERVER_BASED_SEARCH and EXTERNAL_SEARCH are both enabled the unindexed
 # search data is written to a file for indexing by an external tool. With the
@@ -1584,7 +1555,7 @@ SEARCHDATA_FILE        = searchdata.xml
 # projects and redirect the results back to the right project.
 # This tag requires that the tag SEARCHENGINE is set to YES.
 
-EXTERNAL_SEARCH_ID     = 
+EXTERNAL_SEARCH_ID     =
 
 # The EXTRA_SEARCH_MAPPINGS tag can be used to enable searching through doxygen
 # projects other than the one defined by this configuration file, but that are
@@ -1594,7 +1565,7 @@ EXTERNAL_SEARCH_ID     =
 # EXTRA_SEARCH_MAPPINGS = tagname1=loc1 tagname2=loc2 ...
 # This tag requires that the tag SEARCHENGINE is set to YES.
 
-EXTRA_SEARCH_MAPPINGS  = 
+EXTRA_SEARCH_MAPPINGS  =
 
 #---------------------------------------------------------------------------
 # Configuration options related to the LaTeX output
@@ -1603,7 +1574,7 @@ EXTRA_SEARCH_MAPPINGS  =
 # If the GENERATE_LATEX tag is set to YES doxygen will generate LaTeX output.
 # The default value is: YES.
 
-GENERATE_LATEX         = YES
+GENERATE_LATEX         = NO
 
 # The LATEX_OUTPUT tag is used to specify where the LaTeX docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -1655,7 +1626,7 @@ PAPER_TYPE             = a4
 # If left blank no extra packages will be included.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-EXTRA_PACKAGES         = 
+EXTRA_PACKAGES         =
 
 # The LATEX_HEADER tag can be used to specify a personal LaTeX header for the
 # generated LaTeX document. The header should contain everything until the first
@@ -1665,22 +1636,24 @@ EXTRA_PACKAGES         =
 #
 # Note: Only use a user-defined header if you know what you are doing! The
 # following commands have a special meaning inside the header: $title,
-# $datetime, $date, $doxygenversion, $projectname, $projectnumber. Doxygen will
-# replace them by respectively the title of the page, the current date and time,
-# only the current date, the version number of doxygen, the project name (see
-# PROJECT_NAME), or the project number (see PROJECT_NUMBER).
+# $datetime, $date, $doxygenversion, $projectname, $projectnumber,
+# $projectbrief, $projectlogo. Doxygen will replace $title with the empy string,
+# for the replacement values of the other commands the user is refered to
+# HTML_HEADER.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-LATEX_HEADER           = 
+LATEX_HEADER           =
 
 # The LATEX_FOOTER tag can be used to specify a personal LaTeX footer for the
 # generated LaTeX document. The footer should contain everything after the last
-# chapter. If it is left blank doxygen will generate a standard footer.
+# chapter. If it is left blank doxygen will generate a standard footer. See
+# LATEX_HEADER for more information on how to generate a default footer and what
+# special commands can be used inside the footer.
 #
 # Note: Only use a user-defined footer if you know what you are doing!
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-LATEX_FOOTER           = 
+LATEX_FOOTER           =
 
 # The LATEX_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the LATEX_OUTPUT output
@@ -1688,7 +1661,7 @@ LATEX_FOOTER           =
 # markers available.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-LATEX_EXTRA_FILES      = 
+LATEX_EXTRA_FILES      =
 
 # If the PDF_HYPERLINKS tag is set to YES, the LaTeX that is generated is
 # prepared for conversion to PDF (using ps2pdf or pdflatex). The PDF file will
@@ -1699,7 +1672,7 @@ LATEX_EXTRA_FILES      =
 
 PDF_HYPERLINKS         = YES
 
-# If the LATEX_PDFLATEX tag is set to YES, doxygen will use pdflatex to generate
+# If the USE_PDFLATEX tag is set to YES, doxygen will use pdflatex to generate
 # the PDF file directly from the LaTeX files. Set this option to YES to get a
 # higher quality PDF documentation.
 # The default value is: YES.
@@ -1788,14 +1761,14 @@ RTF_HYPERLINKS         = NO
 # default style sheet that doxygen normally uses.
 # This tag requires that the tag GENERATE_RTF is set to YES.
 
-RTF_STYLESHEET_FILE    = 
+RTF_STYLESHEET_FILE    =
 
 # Set optional variables used in the generation of an RTF document. Syntax is
 # similar to doxygen's config file. A template extensions file can be generated
 # using doxygen -e rtf extensionFile.
 # This tag requires that the tag GENERATE_RTF is set to YES.
 
-RTF_EXTENSIONS_FILE    = 
+RTF_EXTENSIONS_FILE    =
 
 #---------------------------------------------------------------------------
 # Configuration options related to the man page output
@@ -1805,7 +1778,7 @@ RTF_EXTENSIONS_FILE    =
 # classes and files.
 # The default value is: NO.
 
-GENERATE_MAN           = NO
+GENERATE_MAN           = YES
 
 # The MAN_OUTPUT tag is used to specify where the man pages will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -1830,7 +1803,7 @@ MAN_EXTENSION          = .3
 # MAN_EXTENSION with the initial . removed.
 # This tag requires that the tag GENERATE_MAN is set to YES.
 
-MAN_SUBDIR             = 
+MAN_SUBDIR             =
 
 # If the MAN_LINKS tag is set to YES and doxygen generates man output, then it
 # will generate one additional man file for each entity documented in the real
@@ -1886,6 +1859,15 @@ GENERATE_DOCBOOK       = NO
 
 DOCBOOK_OUTPUT         = docbook
 
+# If the DOCBOOK_PROGRAMLISTING tag is set to YES doxygen will include the
+# program listings (including syntax highlighting and cross-referencing
+# information) to the DOCBOOK output. Note that enabling this will significantly
+# increase the size of the DOCBOOK output.
+# The default value is: NO.
+# This tag requires that the tag GENERATE_DOCBOOK is set to YES.
+
+DOCBOOK_PROGRAMLISTING = NO
+
 #---------------------------------------------------------------------------
 # Configuration options for the AutoGen Definitions output
 #---------------------------------------------------------------------------
@@ -1934,7 +1916,7 @@ PERLMOD_PRETTY         = YES
 # overwrite each other's variables.
 # This tag requires that the tag GENERATE_PERLMOD is set to YES.
 
-PERLMOD_MAKEVAR_PREFIX = 
+PERLMOD_MAKEVAR_PREFIX =
 
 #---------------------------------------------------------------------------
 # Configuration options related to the preprocessor
@@ -1953,7 +1935,7 @@ ENABLE_PREPROCESSING   = YES
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-MACRO_EXPANSION        = NO
+MACRO_EXPANSION        = YES
 
 # If the EXPAND_ONLY_PREDEF and MACRO_EXPANSION tags are both set to YES then
 # the macro expansion is limited to the macros specified with the PREDEFINED and
@@ -1975,7 +1957,7 @@ SEARCH_INCLUDES        = YES
 # preprocessor.
 # This tag requires that the tag SEARCH_INCLUDES is set to YES.
 
-INCLUDE_PATH           = 
+INCLUDE_PATH           =
 
 # You can use the INCLUDE_FILE_PATTERNS tag to specify one or more wildcard
 # patterns (like *.h and *.hpp) to filter out the header-files in the
@@ -1983,7 +1965,7 @@ INCLUDE_PATH           =
 # used.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-INCLUDE_FILE_PATTERNS  = 
+INCLUDE_FILE_PATTERNS  =
 
 # The PREDEFINED tag can be used to specify one or more macro names that are
 # defined before the preprocessor is started (similar to the -D option of e.g.
@@ -1993,7 +1975,11 @@ INCLUDE_FILE_PATTERNS  =
 # recursively expanded use the := operator instead of the = operator.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-PREDEFINED             = 
+PREDEFINED             = __declspec(x)= \
+                         __attribute__(x)= \
+                         __cplusplus \
+                         AF_DOC \
+						 AF_API_VERSION=${AF_API_VERSION_CURRENT}
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The
@@ -2002,7 +1988,7 @@ PREDEFINED             =
 # definition found in the source code.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-EXPAND_AS_DEFINED      = 
+EXPAND_AS_DEFINED      =
 
 # If the SKIP_FUNCTION_MACROS tag is set to YES then doxygen's preprocessor will
 # remove all references to function-like macros that are alone on a line, have
@@ -2031,13 +2017,13 @@ SKIP_FUNCTION_MACROS   = YES
 # the path). If a tag file is not located in the directory in which doxygen is
 # run, you must also specify the path to the tagfile here.
 
-TAGFILES               = 
+TAGFILES               =
 
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create a
 # tag file that is based on the input files it reads. See section "Linking to
 # external documentation" for more information about the usage of tag files.
 
-GENERATE_TAGFILE       = 
+GENERATE_TAGFILE       =
 
 # If the ALLEXTERNALS tag is set to YES all external class will be listed in the
 # class index. If set to NO only the inherited external classes will be listed.
@@ -2085,14 +2071,14 @@ CLASS_DIAGRAMS         = YES
 # the mscgen tool resides. If left empty the tool is assumed to be found in the
 # default search path.
 
-MSCGEN_PATH            = 
+MSCGEN_PATH            =
 
 # You can include diagrams made with dia in doxygen documentation. Doxygen will
 # then run dia to produce the diagram and insert it in the documentation. The
 # DIA_PATH tag allows you to specify the directory where the dia binary resides.
 # If left empty dia is assumed to be found in the default search path.
 
-DIA_PATH               = 
+DIA_PATH               =
 
 # If set to YES, the inheritance and collaboration graphs will hide inheritance
 # and usage relations if the target is undocumented or is not a class.
@@ -2119,7 +2105,7 @@ HAVE_DOT               = NO
 
 DOT_NUM_THREADS        = 0
 
-# When you want a differently looking font n the dot files that doxygen
+# When you want a differently looking font in the dot files that doxygen
 # generates you can specify the font name using DOT_FONTNAME. You need to make
 # sure dot is able to find the font, which can be done by putting it in a
 # standard location or by setting the DOTFONTPATH environment variable or by
@@ -2141,7 +2127,7 @@ DOT_FONTSIZE           = 10
 # the path where dot can find it using this tag.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_FONTPATH           = 
+DOT_FONTPATH           =
 
 # If the CLASS_GRAPH tag is set to YES then doxygen will generate a graph for
 # each documented class showing the direct and indirect inheritance relations.
@@ -2279,26 +2265,35 @@ INTERACTIVE_SVG        = NO
 # found. If left blank, it is assumed the dot tool can be found in the path.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_PATH               = 
+DOT_PATH               =
 
 # The DOTFILE_DIRS tag can be used to specify one or more directories that
 # contain dot files that are included in the documentation (see the \dotfile
 # command).
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOTFILE_DIRS           = 
+DOTFILE_DIRS           =
 
 # The MSCFILE_DIRS tag can be used to specify one or more directories that
 # contain msc files that are included in the documentation (see the \mscfile
 # command).
 
-MSCFILE_DIRS           = 
+MSCFILE_DIRS           =
 
 # The DIAFILE_DIRS tag can be used to specify one or more directories that
 # contain dia files that are included in the documentation (see the \diafile
 # command).
 
-DIAFILE_DIRS           = 
+DIAFILE_DIRS           =
+
+# When using plantuml, the PLANTUML_JAR_PATH tag should be used to specify the
+# path where java can find the plantuml.jar file. If left blank, it is assumed
+# PlantUML is not used or called during a preprocessing step. Doxygen will
+# generate a warning when it encounters a \startuml command in this case and
+# will not generate output for the diagram.
+# This tag requires that the tag HAVE_DOT is set to YES.
+
+PLANTUML_JAR_PATH      =
 
 # The DOT_GRAPH_MAX_NODES tag can be used to set the maximum number of nodes
 # that will be shown in the graph. If the number of nodes in a graph becomes
